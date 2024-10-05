@@ -1,4 +1,6 @@
--- create a stories table for SQLite
+-- create a stories table for SQLite-- drop table if exists stories;
+
+DROP TABLE IF EXISTS stories;
 CREATE TABLE stories (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
