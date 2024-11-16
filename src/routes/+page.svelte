@@ -29,14 +29,14 @@
 </script>
 
 <div class="container mx-auto p-4 flex flex-col">
-    <div class="flex items-center gap-2 h-full m:mt-24 sm:mt-0">
-        <div class="flex flex-col gap-0.5">
+    <div class="flex items-center gap-2 h-full relative">
+        <div class="flex flex-col gap-0.5 m:mt-24 sm:mt-0">
             <div class="text-2xl font-bold text-gray-800">Orderbook </div>
             <div class="text-center text-sm text-gray-600">
                 (Reset once in a while) Last Updated: {new Date(timestamp).toLocaleString()}
             </div>
         </div>
-        <div class="flex gap-3 items-center fixed top-3 right-6 bg-white justify-center p-2 rounded ring-1">
+        <div class="flex gap-3 items-center absolute bg-white justify-center p-2 rounded ring-1 container sm:w-min top-0 right-0">
             <!--     placeholder is the highest price in the buy orders -->
             <div class="flex flex-col">
                 <div class="justify-between flex gap-1">
