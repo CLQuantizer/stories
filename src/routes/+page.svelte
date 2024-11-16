@@ -1,7 +1,8 @@
 <script>
+    import Orderbook from "$lib/client/OrderbookComponent.svelte";
+
     export let data;
 </script>
 <div>
-    {JSON.stringify(data)}
-    sddf
+    <Orderbook {data} />
 </div>
