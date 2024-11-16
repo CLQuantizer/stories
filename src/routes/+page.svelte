@@ -9,16 +9,8 @@
     $: buys = data.buys.sort((a:Order, b) => b.price - a.price);
     $: sells = data.sells.sort((a:Order, b) => b.price - a.price);
     export let timestamp: string = new Date().toISOString();
-    let quantity:number;
-    let price:number;
-
-    if(buys&&buys.length > 0){
-        price = buys[0].price;
-        quantity = buys[0].orders[0].quantity;
-    } else {
-        price = 1;
-        quantity = 1;
-    }
+    let quantity:number = Math.floor(Math.random() * 10) + 1;
+    let price:number = Math.floor(Math.random() * 10) + 1;
 
 
     const handlePlaceOrder = async (chosenSide:string) => {
@@ -28,6 +20,9 @@
             alert(res.error);
         }
         await invalidateAll();
+        quantity = Math.floor(Math.random() * 10) + 1;
+        price = Math.floor(Math.random() * 10) + 1;
+
     }
 </script>
 
