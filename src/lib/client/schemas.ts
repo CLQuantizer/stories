@@ -20,9 +20,7 @@ const DecimalNumber = z.number()
 
 // Schema for creating new orders
 export const NewOrderSchema = z.object({
-    userId: z.string(),
     side: z.enum([Side.BUY, Side.SELL]),
-    timestamp: z.number(),
     price: DecimalNumber,
     quantity: DecimalNumber,
 });
