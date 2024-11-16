@@ -1,12 +1,61 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		%sveltekit.head%
-	</head>
-	<body data-sveltekit-preload-data="hover">
-		<div style="display: contents">%sveltekit.body%</div>
-	</body>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<!-- Primary Meta Tags -->
+	<title>Real-Time Orderbook Visualization | Trading Engine Demo</title>
+	<meta name="title" content="Real-Time Orderbook Visualization | Trading Engine Demo">
+	<meta name="description" content="Interactive visualization of a trading orderbook matching engine. Watch real-time order matching, trade execution, and price discovery in action.">
+
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="Real-Time Orderbook Visualization">
+	<meta property="og:description" content="Interactive visualization of a trading orderbook matching engine. Watch real-time order matching, trade execution, and price discovery in action.">
+	<meta property="og:image" content="%sveltekit.assets%/og-image.png">
+
+	<!-- Twitter -->
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Real-Time Orderbook Visualization">
+	<meta name="twitter:description" content="Interactive visualization of a trading orderbook matching engine. Watch real-time order matching, trade execution, and price discovery in action.">
+	<meta name="twitter:image" content="%sveltekit.assets%/og-image.png">
+
+	<!-- Additional Meta Tags -->
+	<meta name="keywords" content="orderbook, trading engine, market visualization, price matching, trade execution, financial markets">
+	<meta name="author" content="Your Name">
+	<meta name="robots" content="index, follow">
+
+	<!-- Favicon -->
+	<link rel="icon" href="%sveltekit.assets%/favicon.png" />
+	<link rel="apple-touch-icon" href="%sveltekit.assets%/apple-touch-icon.png">
+
+	<!-- Structured Data -->
+	<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "WebApplication",
+			"name": "Orderbook Visualization",
+			"description": "Interactive visualization of a trading orderbook matching engine",
+			"applicationCategory": "FinanceApplication",
+			"operatingSystem": "Any",
+			"offers": {
+				"@type": "Offer",
+				"price": "0",
+				"priceCurrency": "USD"
+			},
+			"featureList": [
+				"Real-time order matching visualization",
+				"Interactive buy/sell order placement",
+				"Trade history tracking",
+				"Price level visualization"
+			]
+		}
+	</script>
+
+	%sveltekit.head%
+</head>
+<body data-sveltekit-preload-data="hover">
+<div style="display: contents">%sveltekit.body%</div>
+</body>
 </html>
