@@ -5,6 +5,7 @@ declare global {
         interface Platform {
             env: {
                 DB: D1Database;
+                ME_URL: string;
             };
             context: {
                 waitUntil(promise: Promise<any>): void;
