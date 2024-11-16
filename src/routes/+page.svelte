@@ -28,7 +28,7 @@
 
 <div class="container mx-auto p-4 flex flex-col">
     <div class="flex items-center justify-between">
-        <h2 class="text-2xl font-bold text-gray-800">Orderbook</h2>
+        <h2 class="text-2xl font-bold text-gray-800">Orderbook (Reset once in a while)</h2>
         <div class="flex gap-2">
             <!--     placeholder is the highest price in the buy orders -->
             <div>
