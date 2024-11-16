@@ -1,0 +1,25 @@
+# robots.txt for Orderbook Visualization App
+
+# Allow all robots by default
+User-agent: *
+
+# Allow
+Allow: /$
+Allow: /favicon.png
+Allow: /og-image.png
+Allow: /apple-touch-icon.png
+Allow: /sitemap.xml
+
+# Prevent crawling of API endpoints and system files
+Disallow: /api/
+Disallow: /*.json$
+Disallow: /*.js$
+Disallow: /*.css$
+Disallow: /_app/
+Disallow: /.svelte-kit/
+
+# Crawl-delay to prevent overwhelming the server
+Crawl-delay: 1
+
+# Sitemap location (if you decide to implement one)
+Sitemap: https://me.gongxifacai.win/sitemap.xml
