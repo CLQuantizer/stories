@@ -29,25 +29,29 @@
 </script>
 
 <div class="container mx-auto p-4 flex flex-col">
-    <div class="flex items-center gap-2 h-full">
+    <div class="flex items-center gap-2 h-full m:mt-24 sm:mt-0">
         <div class="flex flex-col gap-0.5">
             <div class="text-2xl font-bold text-gray-800">Orderbook </div>
             <div class="text-center text-sm text-gray-600">
                 (Reset once in a while) Last Updated: {new Date(timestamp).toLocaleString()}
             </div>
         </div>
-        <div class="flex gap-3 items-center fixed top-3 right-6 bg-white">
+        <div class="flex gap-3 items-center fixed top-3 right-6 bg-white justify-center p-2 rounded ring-1">
             <!--     placeholder is the highest price in the buy orders -->
-            <div>
-                <label for="price" class="text-gray-800">Price</label>
-                <input class="border rounded bg-secondary" type="number" bind:value={price} name="price"/>
+            <div class="flex flex-col">
+                <div class="justify-between flex gap-1">
+                    <label for="price" class="text-gray-800">Price</label>
+                    <input class="border rounded bg-secondary" type="number" bind:value={price} name="price"/>
+                </div>
+                <div class="justify-between flex">
+                    <label for="quantity" class="text-gray-800">Qty </label>
+                    <input class="border" type="number" bind:value={quantity} name="quantity"/>
+                </div>
             </div>
-            <div>
-                <label for="quantity" class="text-gray-800">Quantity</label>
-                <input class="border" type="number" bind:value={quantity} name="quantity"/>
+            <div class="flex flex-col gap-2">
+                <Button class="bg-green-950" on:click={async ()=> await handlePlaceOrder("buy")}>Buy</Button>
+                <Button class="bg-red-950" on:click={async ()=> await handlePlaceOrder("sell")}>Sell</Button>
             </div>
-            <Button class="bg-green-950" on:click={async ()=> await handlePlaceOrder("buy")}>Buy</Button>
-            <Button class="bg-red-950" on:click={async ()=> await handlePlaceOrder("sell")}>Sell</Button>
         </div>
     </div>
     <div>
