@@ -1,4 +1,6 @@
 <script lang="ts">
+    import {formatTime} from "$lib/utils";
+
     export let orders: Array<{
         price: number;
         orders: Array<{
@@ -9,7 +11,6 @@
         }>;
     }>;
     export let side: 'buy' | 'sell';
-    export let timestamp: string;
     let colorScheme: {
         border: string;
         bg: string;
@@ -29,43 +30,31 @@
         title = side === 'buy' ? 'Buy Orders' : 'Sell Orders';
     }
 
-    const formatTime = (timestamp: number) => {
-        return new Date(timestamp).toLocaleTimeString();
-    };
-
     const formatNumber = (num: number) => num.toFixed(2);
 
-    const getTotalQuantity = (orders) => {
-        return orders.reduce((sum, order) => sum + order.quantity, 0);
+    const getTotalQuantity = (orders:any) => {
+        return orders.reduce((sum:any, order:any) => sum + order.quantity, 0);
     };
 
     // Calculate total quantity across all orders
     $: totalQuantity = orders.reduce((sum, level) =>
         sum + getTotalQuantity(level.orders), 0);
 
-    const getOrderWidth = (order) => {
-        return `${(order.quantity / totalQuantity) * 100}%`;
-    };
+    const getOrderWidth = (order:any) => `${(order.quantity / totalQuantity) * 100}%`
 </script>
 
-<div class="bg-white rounded-lg shadow p-4 {side === 'sell' ? 'mb-4' : ''}">
-    <h3 class="text-lg font-semibold {colorScheme.text} mb-4">{title}</h3>
-    <div class="space-y-4">
+<div class="bg-white rounded-lg shadow p-4 {side === 'sell' ? 'mb-2' : ''}">
+    <h3 class="text-lg font-semibold {colorScheme.text} mb-2">{title}</h3>
+    <div class="space-y-4 text-xs">
         {#each orders as priceLevel}
-            <div class="border-l-4 {colorScheme.border} pl-4">
-                <div class="font-semibold text-gray-800 mb-2">
-                    Price Level: ${formatNumber(priceLevel.price)}
+            <div class="border-l-2 {colorScheme.border} pl-2 flex items-center gap-2">
+                <div class="font-semibold text-gray-800"> ${formatNumber(priceLevel.price)}
                 </div>
                 <div class="flex flex-row w-full">
                     {#each priceLevel.orders as order}
-                        <div
-                                class="{colorScheme.bg} p-3 border {colorScheme.borderColor} rounded mr-2 hover:shadow transition-shadow"
+                        <div class="{colorScheme.bg} p-1 mr-0.5 border {colorScheme.borderColor} rounded hover:shadow transition-shadow"
                                 style="width: {getOrderWidth(order)}">
                             <div class="text-sm">
-                                <div class="flex justify-between">
-                                    <span class="text-gray-600">ID:</span>
-                                    <span class="text-gray-800 font-mono">{order.id.slice(0, 8)}...</span>
-                                </div>
                                 <div class="flex justify-between">
                                     <span class="text-gray-600">Qty:</span>
                                     <span class="text-gray-800">{order.quantity}</span>

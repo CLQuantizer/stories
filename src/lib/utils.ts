@@ -60,3 +60,5 @@ export const flyAndScale = (
 		easing: cubicOut
 	};
 };
+
+export const formatTime = (timestamp: number) =>  new Date(timestamp).toLocaleTimeString()
