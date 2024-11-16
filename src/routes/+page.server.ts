@@ -6,6 +6,5 @@ export const load = async ({platform})=> {
     const timestamp = z.date().parse(new Date(data.timestamp));
     const buys = data.buyOrders;
     const sells = data.sellOrders;
-    console.log(data);
     return {timestamp, buys, sells};
 }
