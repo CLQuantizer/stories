@@ -6,5 +6,5 @@ export const load = async ({platform})=> {
     const timestamp = new Date();
     const buys = data.buy;
     const sells = data.sell;
-    return {timestamp, buys, sells};
+    return {timestamp, buys: buys?buys:[], sells: sells?sells:[]};
 }

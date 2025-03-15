@@ -11,6 +11,9 @@ declare global {
             cf: CfProperties
             ctx: ExecutionContext
         }
+        interface Locals {
+            URL:string
+        }
     }
 }
 
