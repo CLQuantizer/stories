@@ -3,10 +3,7 @@
 declare global {
 	namespace App {
         interface Platform {
-            env: {
-                DB: D1Database;
-                ME_URL: string;
-            };
+            env: { ME_URL: string };
             context: {
                 waitUntil(promise: Promise<any>): void;
             };
