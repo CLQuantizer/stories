@@ -4,16 +4,14 @@
     import { Button } from "$lib/components/ui/button/index";
     import ky from "ky";
     import {invalidateAll} from "$app/navigation";
-    import {formatTime} from "$lib/utils";
+    // import {formatTime} from "$lib/utils";
 
     export let data: {buys: any[], sells: any[]};
     $: buys = data.buys.sort((a:Order, b) => b.price - a.price);
     $: sells = data.sells.sort((a:Order, b) => b.price - a.price);
-    $: trades = data.trades;
     export let timestamp: string = new Date().toISOString();
     let quantity:number = Math.floor(Math.random() * 10) + 1;
     let price:number = Math.floor(Math.random() * 10) + 1;
-
 
     const handlePlaceOrder = async (chosenSide:string) => {
         const res = await ky.post('/api/place', {
@@ -58,14 +56,14 @@
         <SideBook orders={sells} side="sell" />
         <SideBook orders={buys} side="buy" />
     </div>
-    <div class="text-xs gap-2 flex-col flex bg-white mt-2">
-        Trades: (timestamp-quantity-price)
-        <div class="flex flex-wrap gap-1 mb-1">
-            {#each trades as trade}
-                <div class="p-0.5 border rounded flex flex-col text-xs hover:ring hover:bg-secondary">
-                    {formatTime(trade.timestamp)}-{trade.quantity}-{trade.price}
-                </div>
-            {/each}
-        </div>
-    </div>
+<!--    <div class="text-xs gap-2 flex-col flex bg-white mt-2">-->
+<!--        Trades: (timestamp-quantity-price)-->
+<!--        <div class="flex flex-wrap gap-1 mb-1">-->
+<!--            {#each trades as trade}-->
+<!--                <div class="p-0.5 border rounded flex flex-col text-xs hover:ring hover:bg-secondary">-->
+<!--                    {formatTime(trade.timestamp)}-{trade.quantity}-{trade.price}-->
+<!--                </div>-->
+<!--            {/each}-->
+<!--        </div>-->
+<!--    </div>-->
 </div>
