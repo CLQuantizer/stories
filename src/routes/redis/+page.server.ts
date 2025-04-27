@@ -23,7 +23,7 @@ export const load = async () => {
     return {
         buy: serializeBook(books.buy),
         sell: serializeBook(books.sell),
-        trades: trades,
+        trades,
         timestamp: new Date().toISOString(),
     };
 };

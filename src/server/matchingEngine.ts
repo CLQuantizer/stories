@@ -35,15 +35,16 @@ export const matchOrder = async (incoming: Order): Promise<Order> => {
     const priceOk = incoming.side === Side.Buy ? bestPrice.lte(incoming.price) : bestPrice.gte(incoming.price);
     if (!priceOk) break;
 
-    const headOrder = await redis.lindex(bestPriceKey, 0);
-    if (!headOrder) {
+    const headOrderRaw = await redis.lindex(bestPriceKey, 0);
+    if (!headOrderRaw) {
       await redis.zrem(bookKey, bestPriceKey);
       continue;
     }
 
-    const headQty = new Decimal(headOrder.quantity);
-    const remainingQuantity = incoming.quantity.minus(filledQuantity);
-    const tradeQty = Decimal.min(remainingQuantity, headQty);
+    const headOrder = headOrderRaw;
+    const headRemainingQty = new Decimal(headOrder.quantity).minus(headOrder.filledQuantity);
+    const incomingRemainingQty = incoming.quantity.minus(filledQuantity);
+    const tradeQty = Decimal.min(incomingRemainingQty, headRemainingQty);
 
     const trade: Trade = {
       buyOrderId: incoming.side === Side.Buy ? incoming.id : headOrder.id,
@@ -53,11 +54,11 @@ export const matchOrder = async (incoming: Order): Promise<Order> => {
       timestamp: Date.now(),
     };
 
-    await redis.rpush('trades', JSON.stringify(trade));
+    await redis.rpush('trades', trade);
 
     filledQuantity = filledQuantity.plus(tradeQty);
 
-    if (headQty.minus(tradeQty).lte(0)) {
+    if (headRemainingQty.minus(tradeQty).lte(0)) {
       await redis.lpop(bestPriceKey);
       const listLen = await redis.llen(bestPriceKey);
       if (listLen === 0) {
@@ -66,7 +67,6 @@ export const matchOrder = async (incoming: Order): Promise<Order> => {
     } else {
       const updatedHeadOrder = {
         ...headOrder,
-        quantity: headQty.minus(tradeQty),
         filledQuantity: new Decimal(headOrder.filledQuantity).plus(tradeQty),
       };
       await redis.lset(bestPriceKey, 0, updatedHeadOrder);
