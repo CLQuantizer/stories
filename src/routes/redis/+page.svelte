@@ -49,11 +49,10 @@
         <div class="flex flex-col gap-2 w-full sm:w-1/4">
             <div class="flex flex-col gap-1">
                 <div class="flex items-center justify-between">
-                    <h1 class="text-lg font-bold text-cyan-300">Orderbook</h1>
-                    <Badge variant="secondary" class="bg-gradient-to-r from-cyan-500 to-purple-500 text-white shadow-sm">Redis version</Badge>
-                    <Button size="sm" on:click={goToInMemoryVersion}>In Memory Version</Button>
+                    <h1 class="text-lg font-bold text-cyan-300">Orderbook with Redis</h1>
                 </div>
                 <p class="text-cyan-400 text-[10px]">Updated: {new Date(timestamp).toLocaleTimeString()}</p>
+                <Button class="bg-inherit border border-cyan-700/30 " size="sm" on:click={goToInMemoryVersion}>Check out InMem</Button>
             </div>
             <Card class="bg-transparent border border-cyan-700/30 shadow p-2 flex-1">
                 <CardHeader class="p-1">
