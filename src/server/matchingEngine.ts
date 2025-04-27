@@ -1,6 +1,6 @@
 import Decimal from 'decimal.js';
 import { redis } from '@server/redisClient';
-import { orderFromJSON, orderToJSON, priceToKey, Side, type Order } from '@client/common';
+import { orderFromJSON, orderToJSON, priceToKey, Side, tradeToJSON, type Order, type Trade } from '@client/common';
 import * as E from 'fp-ts/lib/Either';
 
 export const insertOrder = async (order: Order): Promise<E.Either<string, Order>> => {
@@ -42,6 +42,16 @@ export const matchOrder = async(incoming: Order): Promise<Order> =>{
     const headQty = new Decimal(headOrder.quantity);
 
     const tradeQty = Decimal.min(remainingQuantity, headQty);
+
+    const trade: Trade = {
+      buyOrderId: incoming.id,
+      sellOrderId: headOrder.id,
+      price: bestPrice,
+      quantity: tradeQty,
+      timestamp: Date.now(),
+    }
+
+    await redis.rpush('trades', tradeToJSON(trade));
     remainingQuantity = remainingQuantity.minus(tradeQty);
 
     if (headQty.minus(tradeQty).lte(0)) {

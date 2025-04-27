@@ -1,71 +1,111 @@
 <script lang="ts">
     import SideBook from "$lib/client/SideBook.svelte";
-    import type {Order} from "$lib/client/schemas";
-    import { Button } from "$lib/components/ui/button/index";
+    import BookV2 from "$lib/client/BookV2.svelte";
+    import { Button } from "$lib/components/ui/button";
+    import { Badge } from "$lib/components/ui/badge";
+    import {
+        Card,
+        CardHeader,
+        CardTitle,
+        CardDescription,
+        CardContent,
+        CardFooter
+    } from "$lib/components/ui/card";
     import ky from "ky";
-    import {invalidateAll} from "$app/navigation";
-    import {formatTime} from "$lib/utils";
+    import { invalidateAll } from "$app/navigation";
+    import { formatTime } from "$lib/utils";
+    import type { Trade } from "@/client/common";
 
     export let data;
-    $: buys = data.buy.sort((a:Order, b) => b.price - a.price);
-    $: sells = data.sell.sort((a:Order, b) => b.price - a.price);
-    $: trades = data.trades;
-    export let timestamp: string = new Date().toISOString();
-    let quantity:number = Math.floor(Math.random() * 10) + 1;
-    let price:number = Math.floor(Math.random() * 10) + 1;
+    $: buys = data.buy.sort((a, b) => b.price - a.price);
+    $: sells = data.sell.sort((a, b) => a.price - b.price);
+    $: trades = data.trades as Trade[];
+    export let timestamp: string = data.timestamp;
 
+    let quantity: number = Math.floor(Math.random() * 10) + 1;
+    let price: number = Math.floor(Math.random() * 10) + 1;
 
-    const handlePlaceOrder = async (chosenSide:string) => {
+    const handlePlaceOrder = async (chosenSide: string) => {
         const res = await ky.post('/api/redis/place', {
-            json: {price, quantity, side: chosenSide}}).json() as {error?:string};
-        if (res.error) {
-            alert(res.error);
-        }
+            json: { price, quantity, side: chosenSide }
+        }).json() as { error?: string };
+        if (res.error) alert(res.error);
         await invalidateAll();
         quantity = Math.floor(Math.random() * 10) + 1;
         price = Math.floor(Math.random() * 10) + 1;
-
     }
 </script>
 
-<div class="container mx-auto p-4 flex flex-col">
-    <div class="flex items-center gap-2 h-full relative">
-        <div class="flex flex-col gap-0.5 m:mt-28 sm:mt-0">
-            <div class="text-2xl font-bold text-gray-800">Orderbook </div>
-            <div class="text-center text-sm text-gray-600">
-                (Reset once in a while) Last Updated: {new Date(timestamp).toLocaleString()}
+<div class="w-full h-screen p-2 flex flex-col gap-2 text-white text-xs">
+    <div class="flex flex-col sm:flex-row justify-between gap-2 w-full h-full">
+        <!-- Left Section -->
+        <div class="flex flex-col gap-2 w-full sm:w-1/4">
+            <div class="flex flex-col gap-1">
+                <div class="flex items-center justify-between">
+                    <h1 class="text-lg font-bold text-cyan-300">Orderbook</h1>
+                    <Badge variant="secondary" class="bg-gradient-to-r from-cyan-500 to-purple-500 text-white shadow-sm">redis</Badge>
+                </div>
+                <p class="text-cyan-400 text-[10px]">Updated: {new Date(timestamp).toLocaleTimeString()}</p>
             </div>
+            <Card class="bg-transparent border border-cyan-700/30 shadow p-2 flex-1">
+                <CardHeader class="p-1">
+                    <CardTitle class="text-cyan-300 text-sm">Place Order</CardTitle>
+                </CardHeader>
+                <CardContent class="flex flex-col gap-1">
+                    <label class="text-cyan-400 text-[10px]">Price</label>
+                    <input class="border border-cyan-700 bg-cyan-900/30 rounded px-1 py-0.5 focus:ring focus:ring-cyan-600 text-white text-xs" type="number" bind:value={price} min="1" />
+
+                    <label class="text-cyan-400 text-[10px] mt-1">Quantity</label>
+                    <input class="border border-cyan-700 bg-cyan-900/30 rounded px-1 py-0.5 focus:ring focus:ring-cyan-600 text-white text-xs" type="number" bind:value={quantity} min="1" />
+                </CardContent>
+                <CardFooter class="flex gap-1 pt-2">
+                    <Button variant="secondary" class="flex-1 bg-gradient-to-r from-green-500 to-cyan-500 text-white text-xs font-bold shadow-sm hover:from-green-600 hover:to-cyan-600" on:click={() => handlePlaceOrder("buy")}>Buy</Button>
+                    <Button variant="secondary" class="flex-1 bg-gradient-to-r from-pink-600 to-purple-600 text-white text-xs font-bold shadow-sm hover:from-pink-700 hover:to-purple-700" on:click={() => handlePlaceOrder("sell")}>Sell</Button>
+                </CardFooter>
+            </Card>
         </div>
-        <div class="flex gap-3 items-center absolute bg-white justify-center p-2 rounded ring-1 container sm:w-min top-0 right-0">
-            <!--     placeholder is the highest price in the buy orders -->
-            <div class="flex flex-col">
-                <div class="justify-between flex gap-1">
-                    <label for="price" class="text-gray-800">Price</label>
-                    <input class="border rounded bg-secondary" type="number" bind:value={price} name="price"/>
-                </div>
-                <div class="justify-between flex">
-                    <label for="quantity" class="text-gray-800">Qty </label>
-                    <input class="border" type="number" bind:value={quantity} name="quantity"/>
-                </div>
-            </div>
-            <div class="flex flex-col gap-2">
-                <Button class="bg-green-950" on:click={async ()=> await handlePlaceOrder("buy")}>Buy</Button>
-                <Button class="bg-red-950" on:click={async ()=> await handlePlaceOrder("sell")}>Sell</Button>
-            </div>
+
+        <!-- Center Section (Sell and Buy Orders) -->
+        <div class="flex flex-col gap-2 w-full sm:w-2/4">
+            <Card class="bg-transparent border border-cyan-700/30 shadow p-2 flex-1">
+                <CardHeader class="p-1">
+                    <CardTitle class="text-cyan-300 text-sm">Sell Orders</CardTitle>
+                </CardHeader>
+                <CardContent class="p-1">
+                    <BookV2 orders={sells} side="sell" />
+                </CardContent>
+            </Card>
+
+            <Card class="bg-transparent border border-cyan-700/30 shadow p-2 flex-1">
+                <CardHeader class="p-1">
+                    <CardTitle class="text-cyan-300 text-sm">Buy Orders</CardTitle>
+                </CardHeader>
+                <CardContent class="p-1">
+                    <BookV2 orders={buys} side="buy" />
+                </CardContent>
+            </Card>
         </div>
-    </div>
-    <div>
-        <SideBook orders={sells} side="sell" />
-        <SideBook orders={buys} side="buy" />
-    </div>
-    <div class="text-xs gap-2 flex-col flex bg-white mt-2">
-        Trades: (timestamp-quantity-price)
-        <div class="flex flex-wrap gap-1 mb-1">
-            {#each trades as trade}
-                <div class="p-0.5 border rounded flex flex-col text-xs hover:ring hover:bg-secondary">
-                    {formatTime(trade.timestamp)}-{trade.quantity}-{trade.price}
-                </div>
-            {/each}
+
+        <!-- Right Section (Trades) -->
+        <div class="flex flex-col gap-2 w-full sm:w-1/4">
+            <Card class="bg-transparent border border-cyan-700/30 shadow p-2 flex-1">
+                <CardHeader class="p-1">
+                    <CardTitle class="text-cyan-200 text-sm flex items-center justify-between">
+                        Trades <Badge variant="outline" class="bg-cyan-800 text-cyan-300 border-cyan-600 text-[10px]">{trades.length}</Badge>
+                    </CardTitle>
+                </CardHeader>
+                <CardContent class="flex flex-wrap gap-1 overflow-auto max-h-[90vh]">
+                    {#if trades.length === 0}
+                        <Badge variant="outline" class="bg-gray-800 text-gray-400 border-gray-600 text-[10px]">No trades</Badge>
+                    {:else}
+                        {#each trades as trade}
+                            <Badge variant="secondary" class="bg-gradient-to-r from-cyan-500 to-purple-500 text-white text-[10px] shadow">
+                                {formatTime(trade.timestamp)} - {trade.quantity} - {trade.price}
+                            </Badge>
+                        {/each}
+                    {/if}
+                </CardContent>
+            </Card>
         </div>
     </div>
 </div>

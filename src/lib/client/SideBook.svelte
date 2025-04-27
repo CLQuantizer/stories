@@ -1,16 +1,12 @@
 <script lang="ts">
     import {formatTime} from "$lib/utils";
+    import type { Order, Side } from "@client/common";
 
     export let orders: Array<{
         price: number;
-        orders: Array<{
-            id: string;
-            quantity: number;
-            filledQuantity: number;
-            timestamp: number;
-        }>;
+        orders: Array<Order>;
     }>;
-    export let side: 'buy' | 'sell';
+    export let side: Side;
     let colorScheme: {
         border: string;
         bg: string;

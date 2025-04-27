@@ -26,14 +26,4 @@ export const TradeSchema = z.object({
     timestamp: z.number(),
 });
 
-export const priceLevelSchema = z.object({
-    price: DecimalNumber,
-    orders: z.array(OrderSchema),
-});
-
-const OrderBookSchema = z.record(z.array(priceLevelSchema));
-
-export type PriceLevel = z.infer<typeof priceLevelSchema>;
-export type Order = z.infer<typeof OrderSchema>;
-export type Trade = z.infer<typeof TradeSchema>;
-export type OrderBook = z.infer<typeof OrderBookSchema>;
+// export type Trade = z.infer<typeof TradeSchema>;
