@@ -1,5 +1,4 @@
 <script lang="ts">
-    import SideBook from "$lib/client/SideBook.svelte";
     import BookV2 from "$lib/client/BookV2.svelte";
     import { Button } from "$lib/components/ui/button";
     import { Badge } from "$lib/components/ui/badge";
@@ -7,14 +6,13 @@
         Card,
         CardHeader,
         CardTitle,
-        CardDescription,
         CardContent,
         CardFooter
     } from "$lib/components/ui/card";
     import ky from "ky";
     import { invalidateAll } from "$app/navigation";
     import { formatTime } from "$lib/utils";
-    import type { Trade } from "@/client/common";
+    import { Side, type Trade } from "@/client/common";
 
     export let data;
     $: buys = data.buy.sort((a, b) => b.price - a.price);
@@ -72,7 +70,7 @@
                     <CardTitle class="text-cyan-300 text-sm">Sell Orders</CardTitle>
                 </CardHeader>
                 <CardContent class="p-1">
-                    <BookV2 orders={sells} side="sell" />
+                    <BookV2 orders={sells} side={Side.Sell} />
                 </CardContent>
             </Card>
 
@@ -81,7 +79,7 @@
                     <CardTitle class="text-cyan-300 text-sm">Buy Orders</CardTitle>
                 </CardHeader>
                 <CardContent class="p-1">
-                    <BookV2 orders={buys} side="buy" />
+                    <BookV2 orders={buys} side={Side.Buy} />
                 </CardContent>
             </Card>
         </div>

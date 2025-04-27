@@ -1,16 +1,11 @@
 import { redis } from '@server/redisClient';
-import { Side, orderFromJSON } from '@client/common';
+import { Side, orderFromJSON, type Order } from '@client/common';
 
 export async function getBooks() {
     const sides: Side[] = [Side.Buy, Side.Sell];
     const result: Record<Side, Array<{
       price: number;
-      orders: Array<{
-        id: string;
-        quantity: number;
-        filledQuantity: number;
-        timestamp: number;
-      }>;
+      orders: Array<Order>;
     }>> = {
       [Side.Buy]: [],
       [Side.Sell]: []
