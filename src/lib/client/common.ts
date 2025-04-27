@@ -58,22 +58,3 @@ export const validateSide = (side: string): E.Either<string, Side> =>
   side === 'buy' || side === 'sell' ? E.right(side as Side) : E.left('Invalid side');
 
 export const priceToKey = (side: Side, price: Decimal) => `price:${side}:${price.toFixed(1)}`; // Keep 1 decimal place
-  
-export const orderToJSON = (order: Order) => JSON.stringify(order);
-  
-export const orderFromJSON = (data: string): Order => JSON.parse(data);
-
-export const tradeToJSON = (trade: Trade) => JSON.stringify({
-  ...trade,
-  price: trade.price.toString(),
-  quantity: trade.quantity.toString(),
-});
-
-export const tradeFromJSON = (data: string): Trade => {
-  const obj = JSON.parse(data);
-  return {
-    ...obj,
-    price: new Decimal(obj.price).toNumber(),
-    quantity: new Decimal(obj.quantity).toNumber(),
-  };
-};

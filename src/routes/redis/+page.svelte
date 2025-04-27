@@ -17,7 +17,7 @@
     export let data;
     $: buys = data.buy.sort((a, b) => b.price - a.price);
     $: sells = data.sell.sort((a, b) => a.price - b.price);
-    $: trades = data.trades as Trade[];
+    $: trades = data.trades;
     export let timestamp: string = data.timestamp;
 
     let quantity: number = Math.floor(Math.random() * 10) + 1;
