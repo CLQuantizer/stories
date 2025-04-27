@@ -12,11 +12,11 @@
     import ky from "ky";
     import { goto, invalidateAll } from "$app/navigation";
     import { formatTime } from "$lib/utils";
-    import { Side, type Trade } from "@/client/common";
+    import { Side } from "@/client/common";
 
     export let data;
-    $: buys = data.buy.sort((a, b) => b.price - a.price);
-    $: sells = data.sell.sort((a, b) => a.price - b.price);
+    $: buys = data.buy;
+    $: sells = data.sell;
     $: trades = data.trades;
     export let timestamp: string = data.timestamp;
 

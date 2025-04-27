@@ -57,6 +57,7 @@ export async function getBooks() {
         orders
       });
     }
+    result[side].sort((a, b) => b.price - a.price);
   }
 
   return result;

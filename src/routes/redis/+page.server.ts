@@ -19,7 +19,6 @@ const serializeBook = (book: any[]) => book.map(level => ({
 
 export const load = async () => {
     const books = await getBooks();
-    console.log(books);
     const trades = await redis.lrange('trades', 0, -1) as Trade[];
     return {
         buy: serializeBook(books.buy),
