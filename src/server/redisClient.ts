@@ -1,10 +1,11 @@
-import { REDIS_URI } from '$env/static/private';
 // import Redis from 'ioredis';
+import { REDIS_URI, REDIS_SECRET } from "$env/static/private";
 import { Redis } from "@upstash/redis/cloudflare";
-import { env } from 'cloudflare:workers';
 
-const redis = Redis.fromEnv(env);
-
+export const redis = new Redis({
+  url: REDIS_URI,
+  token: REDIS_SECRET
+});
 
 // const redisUrl = new URL(REDIS_URI);
 
