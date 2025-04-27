@@ -43,9 +43,7 @@
             <div class="text-center text-sm text-gray-600">
                 (Reset once in a while) Last Updated: {new Date(timestamp).toLocaleString()}
             </div>
-            <div class="mt-2">
-                <Button on:click={goToRedisVersion} class="bg-blue-600 hover:bg-blue-700 text-white text-sm">View Redis Version</Button>
-            </div>
+            
         </div>
 
         <div class="flex gap-3 items-center absolute bg-white justify-center p-2 rounded ring-1 container sm:w-min top-0 right-0">
