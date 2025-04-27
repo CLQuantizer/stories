@@ -1,3 +1,3 @@
-<div class="bg-gradient-to-br from-blue-950 via-cyan-900 to-purple-900">
+<div class="bg-gradient-to-br from-blue-950 via-cyan-950 to-purple-950">
     <slot />
 </div>

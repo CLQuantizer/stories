@@ -73,8 +73,7 @@ export const tradeFromJSON = (data: string): Trade => {
   const obj = JSON.parse(data);
   return {
     ...obj,
-    price: new Decimal(obj.price),
-    quantity: new Decimal(obj.quantity),
+    price: new Decimal(obj.price).toNumber(),
+    quantity: new Decimal(obj.quantity).toNumber(),
   };
 };
-
