@@ -1,3 +1,7 @@
-<script lang="ts"></script>
+<script lang="ts">
+    export let data: {books: any}
+</script>
     
-<div>sd</div>
+<div>
+    <pre>{JSON.stringify(data, null, 2)}</pre>
+</div>

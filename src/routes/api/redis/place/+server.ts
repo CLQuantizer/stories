@@ -9,7 +9,7 @@ export const POST = async ({request})=> {
     const quantity = new Decimal(body.quantity);
     validatePrice(price);
     validateQuantity(quantity);
-    const side = body.side.toLowerCase();
+    const side = body.side?.toLowerCase();
     // validate side
     if (side !== 'buy' && side !== 'sell') {
         return json({error: 'Invalid side'}, {status: 400});

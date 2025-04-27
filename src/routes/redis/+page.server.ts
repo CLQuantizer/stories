@@ -1,9 +1,7 @@
-import { redis } from "@server/redisClient";
+import { getBooks } from "@server/getBooks";
 
 export const load = async ()=> {
-    await redis.set('hello', 'world');
-    const value = await redis.get('hello');
-    console.log("redis value", value);
-    await redis.del('hello');
-    return {value};
+    const books = await getBooks()
+    console.log("books", books);
+    return {buy: books.buy, sell: books.sell};
 }

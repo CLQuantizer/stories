@@ -34,13 +34,11 @@ export async function getBooks() {
             timestamp: parsed.timestamp
           };
         });
-  
         result[side].push({
           price,
           orders
         });
       }
-  
       // Sort: for buy - descending, for sell - ascending
       result[side].sort((a, b) => side === Side.Buy ? b.price - a.price : a.price - b.price);
     }
