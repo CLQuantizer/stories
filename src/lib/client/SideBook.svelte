@@ -15,6 +15,7 @@
     };
     let title: string;
 
+
     // Derived values based on side
     $: {
         colorScheme = {

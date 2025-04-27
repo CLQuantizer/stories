@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { formatTime } from "$lib/utils";
     import Button from "@/components/ui/button/button.svelte";
     import type { Order, Side } from "@client/common";
 

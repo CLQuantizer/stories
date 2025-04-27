@@ -57,8 +57,6 @@ export async function getBooks() {
         orders
       });
     }
-
-    result[side].sort((a, b) => side === Side.Buy ? b.price - a.price : a.price - b.price);
   }
 
   return result;
