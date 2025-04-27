@@ -1,5 +1,5 @@
 import { redis } from '@server/redisClient';
-import { Side, orderFromJSON } from '@server/common';
+import { Side, orderFromJSON } from '@client/common';
 
 export async function getBooks() {
     const sides: Side[] = [Side.Buy, Side.Sell];
@@ -29,8 +29,8 @@ export async function getBooks() {
           const parsed = orderFromJSON(raw);
           return {
             id: parsed.id,
-            quantity: parsed.quantity.toNumber(),
-            filledQuantity: parsed.filledQuantity.toNumber(),
+            quantity: Number(parsed.quantity),
+            filledQuantity: Number(parsed.filledQuantity),
             timestamp: parsed.timestamp
           };
         });

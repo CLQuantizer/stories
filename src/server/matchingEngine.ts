@@ -1,6 +1,6 @@
 import Decimal from 'decimal.js';
 import { redis } from '@server/redisClient';
-import { orderFromJSON, orderToJSON, priceToKey, Side, type InsertResult, type Order } from '@server/common';
+import { orderFromJSON, orderToJSON, priceToKey, Side, type Order } from '@client/common';
 import { left, right } from 'fp-ts/Either';
 import type { Either } from 'fp-ts/Either';
 

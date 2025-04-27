@@ -18,25 +18,6 @@ const DecimalNumber = z.number()
     .transform((n) => Number(n.toFixed(2))) // This automatically handles decimal places
     .refine((n) => Number.isFinite(n), "Must be a valid number");
 
-// Schema for creating new orders
-export const NewOrderSchema = z.object({
-    side: z.enum([Side.BUY, Side.SELL]),
-    price: DecimalNumber,
-    quantity: DecimalNumber,
-});
-
-// Full order schema extends new order schema with additional fields
-export const OrderSchema = NewOrderSchema.extend({
-    id: z.string().uuid(),
-    status: z.enum([
-        OrderStatus.OPEN,
-        OrderStatus.FILLED,
-        OrderStatus.PARTIALLY_FILLED,
-        OrderStatus.CANCELLED,
-    ]),
-    filledQuantity: DecimalNumber.default(0),
-});
-
 export const TradeSchema = z.object({
     buyOrderId: z.string(),
     sellOrderId: z.string(),

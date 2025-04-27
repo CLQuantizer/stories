@@ -16,6 +16,7 @@ export default {
 		alias: {
 			"@/*": "./src/lib/*",
 			'@server': './src/server/*',
+			'@client': './src/lib/client/*',
 		},
 	}
 };

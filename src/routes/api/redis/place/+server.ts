@@ -1,6 +1,6 @@
 import {json} from "@sveltejs/kit";
 import Decimal from "decimal.js";
-import { validatePrice, validateQuantity, validateSide } from "@server/common";
+import { validatePrice, validateQuantity, validateSide } from "@/client/common";
 import { insertOrder, matchOrder } from "@server/matchingEngine";
 import { isLeft } from "fp-ts/lib/Either";
 
@@ -19,6 +19,7 @@ export const POST = async ({request})=> {
     if (isLeft(sideValidation)) {
         return json({error: sideValidation.left}, {status: 400});
     }
+    console.log("placing order:", priceValidation.right, quantityValidation.right, sideValidation.right);
     const order = {id: crypto.randomUUID(), 
         price: priceValidation.right, 
         quantity: quantityValidation.right, 

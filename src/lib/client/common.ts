@@ -8,13 +8,39 @@ export enum Side {
   Sell = 'sell'
 }  
 
-export interface Order {
-  id: string;
+export const OrderStatus = {
+  OPEN: "OPEN",
+  PARTIALLY_FILLED: "PARTIALLY_FILLED",
+} as const;
+
+export interface NewOrder {
   side: Side;
   quantity: Decimal;
   price: Decimal;
+}
+
+export interface Order extends NewOrder {
+  id: string;
   filledQuantity: Decimal;
   timestamp: number;
+}
+
+export interface Trade {
+  buyOrderId: string;
+  sellOrderId: string;
+  price: Decimal;
+  quantity: Decimal;
+  timestamp: number;
+}
+
+export interface PriceLevel {
+  price: Decimal;
+  orders: Order[];
+}
+
+export interface OrderBook {
+  buy: PriceLevel[];
+  sell: PriceLevel[];
 }
 
 export interface InsertResult {

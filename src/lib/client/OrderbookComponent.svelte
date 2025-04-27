@@ -1,4 +1,5 @@
 <script lang="ts">
-    export let data;
+    import type { OrderBook } from "@client/common";
+    export let data: OrderBook;
 </script>
 <div></div>
