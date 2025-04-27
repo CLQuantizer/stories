@@ -1,5 +1,6 @@
 import ky from "ky";
 import {json} from "@sveltejs/kit";
+import { ME_URL } from "$env/static/private";
 
 export const POST = async ({request, platform})=> {
     try {
@@ -7,8 +8,7 @@ export const POST = async ({request, platform})=> {
         const price = +body.price;
         const quantity = +body.quantity;
         const side = body.side.toUpperCase();
-        const URL = platform?.env.ME_URL
-        const res = await ky.post(URL + '/place', {json: {side, price, quantity}}).json();
+        const res = await ky.post(ME_URL+ '/place', {json: {side, price, quantity}}).json();
         console.log("placing order:", res);
         return json(res);
     } catch (error: any) {
