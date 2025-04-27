@@ -10,7 +10,7 @@
         CardFooter
     } from "$lib/components/ui/card";
     import ky from "ky";
-    import { invalidateAll } from "$app/navigation";
+    import { goto, invalidateAll } from "$app/navigation";
     import { formatTime } from "$lib/utils";
     import { Side, type Trade } from "@/client/common";
 
@@ -37,6 +37,10 @@
         await ky.get('/api/redis/reset');
         await invalidateAll();
     }
+
+    const goToInMemoryVersion = async () => {
+        await goto('/');
+    }
 </script>
 
 <div class="w-full h-screen p-2 flex flex-col gap-2 text-white text-xs">
@@ -46,7 +50,8 @@
             <div class="flex flex-col gap-1">
                 <div class="flex items-center justify-between">
                     <h1 class="text-lg font-bold text-cyan-300">Orderbook</h1>
-                    <Badge variant="secondary" class="bg-gradient-to-r from-cyan-500 to-purple-500 text-white shadow-sm">redis</Badge>
+                    <Badge variant="secondary" class="bg-gradient-to-r from-cyan-500 to-purple-500 text-white shadow-sm">Redis version</Badge>
+                    <Button size="sm" on:click={goToInMemoryVersion}>In Memory Version</Button>
                 </div>
                 <p class="text-cyan-400 text-[10px]">Updated: {new Date(timestamp).toLocaleTimeString()}</p>
             </div>
