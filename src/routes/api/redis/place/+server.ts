@@ -1,22 +1,34 @@
 import {json} from "@sveltejs/kit";
 import Decimal from "decimal.js";
-import { validatePrice, validateQuantity } from "@server/common";
+import { validatePrice, validateQuantity, validateSide } from "@server/common";
 import { insertOrder, matchOrder } from "@server/matchingEngine";
+import { isLeft } from "fp-ts/lib/Either";
 
 export const POST = async ({request})=> {
     const body = await request.json() as any;
-    const price = new Decimal(body.price);
-    const quantity = new Decimal(body.quantity);
-    validatePrice(price);
-    validateQuantity(quantity);
-    const side = body.side?.toLowerCase();
-    // validate side
-    if (side !== 'buy' && side !== 'sell') {
-        return json({error: 'Invalid side'}, {status: 400});
+    const {price, quantity, side} = body;
+    const priceValidation = validatePrice(new Decimal(price));
+    const quantityValidation = validateQuantity(new Decimal(quantity));
+    const sideValidation = validateSide(side);
+    if (isLeft(priceValidation)) {
+        return json({error: priceValidation.left}, {status: 400});
     }
-    const order = {id: crypto.randomUUID(), price, quantity, side};
-    const res = await matchOrder(order);
-    const inserted = await insertOrder(order);
-    console.log("placing order:", res, inserted);
-    return json({res, inserted});
+    if (isLeft(quantityValidation)) {
+        return json({error: quantityValidation.left}, {status: 400});
+    }
+    if (isLeft(sideValidation)) {
+        return json({error: sideValidation.left}, {status: 400});
+    }
+    const order = {id: crypto.randomUUID(), 
+        price: priceValidation.right, 
+        quantity: quantityValidation.right, 
+        side: sideValidation.right, 
+        filledQuantity: new Decimal(0), timestamp: Date.now()};
+    const processed = await matchOrder(order);
+    const returning = await insertOrder(processed);
+    if (isLeft(returning)) {
+        console.log("placing order:", processed, returning.left);
+        return json({message: returning.left});
+    }
+    return json({order: returning.right}, {status: 200});
 }
