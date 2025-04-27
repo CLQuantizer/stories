@@ -1,18 +1,17 @@
 import Decimal from 'decimal.js';
 import { redis } from '@server/redisClient';
 import { orderFromJSON, orderToJSON, priceToKey, Side, type Order } from '@client/common';
-import { left, right } from 'fp-ts/Either';
-import type { Either } from 'fp-ts/Either';
+import * as E from 'fp-ts/lib/Either';
 
-export const insertOrder = async (order: Order): Promise<Either<string, Order>> => {
+export const insertOrder = async (order: Order): Promise<E.Either<string, Order>> => {
   if (order.quantity.lte(0)) {
-    return left('order filled');
+    return E.left('order filled');
   }
   const bookKey = `book:${order.side}`;
   const priceKey = priceToKey(order.side, order.price);
   await redis.zadd(bookKey, Number(order.price).toString(), priceKey);
   await redis.rpush(priceKey, orderToJSON(order));
-  return right(order);
+  return E.right(order);
 }
 
 export const matchOrder = async(incoming: Order): Promise<Order> =>{
