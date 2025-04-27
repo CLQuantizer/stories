@@ -13,6 +13,7 @@
     import { goto, invalidateAll } from "$app/navigation";
     import { formatTime } from "$lib/utils";
     import { Side } from "@/client/common";
+    import { pop } from "@/client/store";
 
     export let data;
     $: buys = data.buy;
@@ -39,6 +40,7 @@
     }
 
     const goToInMemoryVersion = async () => {
+        pop('Redirecting to InMemory Version ...', 'Please wait');
         await goto('/');
     }
 </script>

@@ -1,16 +1,17 @@
 <script lang="ts">
     import SideBook from "$lib/client/SideBook.svelte";
-    import type {Order} from "$lib/client/schemas";
+
     import { Button } from "$lib/components/ui/button/index";
     import ky from "ky";
     import {invalidateAll} from "$app/navigation";
     import {formatTime} from "$lib/utils";
     import { goto } from "$app/navigation";
     import { Side } from "@/client/common";
+    import { pop } from "@/client/store";
 
     export let data: {buys: any[], sells: any[], trades: any[]};
-    $: buys = data.buys.sort((a: Order, b) => b.price - a.price);
-    $: sells = data.sells.sort((a: Order, b) => b.price - a.price);
+    $: buys = data.buys.sort((a, b) => b.price - a.price);
+    $: sells = data.sells.sort((a, b) => b.price - a.price);
     $: trades = data.trades;
     export let timestamp: string = new Date().toISOString();
 
@@ -31,8 +32,9 @@
         price = Math.floor(Math.random() * 10) + 1;
     };
 
-    const goToRedisVersion = () => {
-        goto('/redis');
+    const goToRedisVersion = async () => {
+        pop('Redirecting to Redis Version ...', 'Please wait');
+        await goto('/redis');
     }
 </script>
 
