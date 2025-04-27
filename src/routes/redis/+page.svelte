@@ -77,25 +77,12 @@
         </div>
 
         <!-- Center Section (Sell and Buy Orders) -->
-        <div class="flex flex-col gap-2 w-full sm:w-2/4">
-            <Card class="bg-transparent border border-cyan-700/30 shadow p-2 flex-1">
-                <CardHeader class="p-1">
-                    <CardTitle class="text-cyan-300 text-sm">Sell Orders</CardTitle>
-                </CardHeader>
-                <CardContent class="p-1">
-                    <BookV2 orders={sells} side={Side.Sell} />
-                </CardContent>
-            </Card>
-
-            <Card class="bg-transparent border border-cyan-700/30 shadow p-2 flex-1">
-                <CardHeader class="p-1">
-                    <CardTitle class="text-cyan-300 text-sm">Buy Orders</CardTitle>
-                </CardHeader>
-                <CardContent class="p-1">
-                    <BookV2 orders={buys} side={Side.Buy} />
-                </CardContent>
-            </Card>
-        </div>
+        <Card class="bg-transparent border border-cyan-700/30 shadow p-2 flex-1">
+            <CardContent class="p-1 flex flex-col gap-2">
+                <BookV2 orders={sells} side={Side.Sell} />
+                <BookV2 orders={buys} side={Side.Buy} />
+            </CardContent>
+        </Card>
 
         <!-- Right Section (Trades) -->
         <div class="flex flex-col gap-2 w-full sm:w-1/4">
