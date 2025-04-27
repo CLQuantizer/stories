@@ -39,7 +39,7 @@
 <div class="container mx-auto p-4 flex flex-col">
     <div class="flex items-center gap-2 h-full relative">
         <div class="flex flex-col gap-0.5 m:mt-28 sm:mt-0">
-            <div class="text-2xl font-bold text-gray-800">Orderbook (Deno + IMEME Version)</div>
+            <div class="text-2xl font-bold text-gray-800">Orderbook (Deno + In Memory Version)</div>
             <div class="text-center text-sm text-gray-600">
                 (Reset once in a while) Last Updated: {new Date(timestamp).toLocaleString()}
             </div>
