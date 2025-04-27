@@ -7,12 +7,15 @@ export enum Side {
   Sell = 'sell'
 }  
 
-export interface Order {
-    id: string;
-    side: Side;
-    quantity: Decimal;
-    price: Decimal;
+interface Order {
+  id: string;
+  side: Side;
+  quantity: Decimal;
+  price: Decimal;
+  filledQuantity: Decimal;
+  timestamp: number;
 }
+
 
 export function validatePrice(price: Decimal) {
     if (!price.mod(TICK_SIZE).eq(0)) {

@@ -9,7 +9,11 @@ export const POST = async ({request})=> {
     const quantity = new Decimal(body.quantity);
     validatePrice(price);
     validateQuantity(quantity);
-    const side = body.side.toUpperCase();
+    const side = body.side.toLowerCase();
+    // validate side
+    if (side !== 'buy' && side !== 'sell') {
+        return json({error: 'Invalid side'}, {status: 400});
+    }
     const order = {id: crypto.randomUUID(), price, quantity, side};
     const res = await matchOrder(order);
     const inserted = await insertOrder(order);
