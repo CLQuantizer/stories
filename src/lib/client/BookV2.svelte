@@ -1,7 +1,7 @@
 <script lang="ts">
     import { formatTime } from "$lib/utils";
+    import Button from "@/components/ui/button/button.svelte";
     import type { Order, Side } from "@client/common";
-    import * as Tooltip from "$lib/components/ui/tooltip";
 
     export let orders: Array<{
         price: number;
@@ -39,11 +39,15 @@
     const MIN_WIDTH = 10; // in percentage
     const MAX_WIDTH = 80; // in percentage
 
-    const getOrderWidth = (order: any) => {
+    const getOrderWidth = (order: Order) => {
         if (totalQuantity === 0) return `${MIN_WIDTH}%`;
         let width = (order.quantity / totalQuantity) * 100;
         width = Math.max(MIN_WIDTH, Math.min(width, MAX_WIDTH));
         return `${width}%`;
+    };
+
+    const handleOrderClick = (order: Order) => {
+        alert(JSON.stringify(order, null, 2));
     };
 </script>
 
@@ -55,19 +59,15 @@
                 <div class="font-bold text-cyan-300">${formatNumber(priceLevel.price)}</div>
                 <div class="flex flex-row w-full gap-1">
                     {#each priceLevel.orders as order}
-                        <Tooltip.Root>
-                            <Tooltip.Trigger asChild let:builder>
-                                <div class="{colorScheme.bg} p-1 border {colorScheme.borderColor} rounded-md hover:shadow-lg transition-all duration-200 min-w-[24px]"
-                                    style="width: {getOrderWidth(order)}">
-                                    <div class="flex justify-between text-cyan-100 text-[10px]">
-                                        <span class="font-semibold">{order.quantity}-{order.filledQuantity}</span>
-                                    </div>
-                                </div>
-                            </Tooltip.Trigger>
-                            <Tooltip.Content>
-                                <p>Time: {formatTime(order.timestamp)}</p>
-                            </Tooltip.Content>
-                        </Tooltip.Root>
+                        <Button 
+                            on:click={() => handleOrderClick(order)}
+                            class="{colorScheme.bg} p-1 border {colorScheme.borderColor} rounded-md hover:shadow-lg transition-all duration-200 
+                            min-w-[24px] cursor-pointer h-4"
+                            style="width: {getOrderWidth(order)}">
+                            <div class="flex justify-between text-cyan-100 text-[10px]">
+                                <span class="font-semibold">{order.quantity}-{order.filledQuantity}</span>
+                            </div>
+                        </Button>
                     {/each}
                 </div>
             </div>
