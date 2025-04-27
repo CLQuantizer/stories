@@ -1,5 +1,12 @@
+import { REDIS_URI } from '$env/static/private';
 import Redis from 'ioredis';
 
-export const redis = new Redis(process.env.REDIS_URI!, {
-  tls: {} // Important! TLS enabled because of "rediss://"
+const redisUrl = new URL(REDIS_URI);
+
+export const redis = new Redis({
+  host: redisUrl.hostname,
+  port: Number(redisUrl.port),
+  username: redisUrl.username,
+  password: redisUrl.password,
+  tls: {}, // Use TLS for rediss
 });
