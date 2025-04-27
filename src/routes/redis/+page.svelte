@@ -97,7 +97,7 @@
                         <Badge variant="outline" class="bg-gray-800 text-gray-400 border-gray-600 text-[10px]">No trades</Badge>
                     {:else}
                         {#each trades as trade}
-                            <Badge variant="secondary" class="bg-gradient-to-r from-cyan-500 to-purple-500 text-white text-[10px] shadow">
+                            <Badge variant="secondary" class="bg-gradient-to-r from-cyan-500 to-purple-500 text-white text-[10px] border-cyan-600">
                                 {formatTime(trade.timestamp)} - {trade.quantity} - {trade.price}
                             </Badge>
                         {/each}
