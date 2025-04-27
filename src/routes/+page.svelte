@@ -43,7 +43,7 @@
             <div class="text-center text-sm text-gray-600">
                 (Reset once in a while) Last Updated: {new Date(timestamp).toLocaleString()}
             </div>
-            
+            <Button class="bg-blue-950" on:click={goToRedisVersion}>Redis Version</Button>
         </div>
 
         <div class="flex gap-3 items-center absolute bg-white justify-center p-2 rounded ring-1 container sm:w-min top-0 right-0">

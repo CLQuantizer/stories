@@ -32,6 +32,11 @@
         quantity = Math.floor(Math.random() * 10) + 1;
         price = Math.floor(Math.random() * 10) + 1;
     }
+
+    const handleReset = async () => {
+        await ky.get('/api/redis/reset');
+        await invalidateAll();
+    }
 </script>
 
 <div class="w-full h-screen p-2 flex flex-col gap-2 text-white text-xs">
@@ -61,6 +66,9 @@
                     <Button variant="secondary" class="flex-1 bg-gradient-to-r from-pink-600 to-purple-600 text-white text-xs font-bold shadow-sm hover:from-pink-700 hover:to-purple-700" on:click={() => handlePlaceOrder("sell")}>Sell</Button>
                 </CardFooter>
             </Card>
+            <Button variant="secondary" class="mt-2 opacity-50 text-xs font-bold shadow-sm" on:click={handleReset}>
+                Reset Redis
+            </Button>
         </div>
 
         <!-- Center Section (Sell and Buy Orders) -->
