@@ -28,7 +28,7 @@ export const POST = async ({request})=> {
     const processed = await matchOrder(order);
     const returning = await insertOrder(processed);
     if (E.isLeft(returning)) {
-        console.log("placing order:", processed, returning.left);
+        console.log(processed, returning.left);
         return json({message: returning.left});
     }
     return json({order: returning.right}, {status: 200});
