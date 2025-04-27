@@ -34,6 +34,7 @@
   "type": "module",
   "dependencies": {
     "@tailwindcss/typography": "^0.5.15",
+    "ioredis": "^5.6.1",
     "ky": "^1.7.2"
   }
 }
