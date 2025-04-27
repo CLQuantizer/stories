@@ -40,10 +40,10 @@
     <div class="flex items-center gap-2 h-full relative">
         <div class="flex flex-col gap-0.5 m:mt-28 sm:mt-0">
             <div class="text-2xl font-bold text-gray-800">Orderbook (Deno + In Memory Version)</div>
-            <div class="text-center text-sm text-gray-600">
-                (Reset once in a while) Last Updated: {new Date(timestamp).toLocaleString()}
+            <div class="text-center text-sm text-gray-600 flex gap-2 items-center">
+                (Reset once in a while) Last Updated: {new Date(timestamp).toLocaleString()}             
+                <Button class="bg-blue-200 text-black hover:bg-blue-300" size="sm" on:click={goToRedisVersion}>Redis Version</Button>
             </div>
-            <Button class="bg-blue-950" on:click={goToRedisVersion}>Redis Version</Button>
         </div>
 
         <div class="flex gap-3 items-center absolute bg-white justify-center p-2 rounded ring-1 container sm:w-min top-0 right-0">
