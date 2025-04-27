@@ -14,7 +14,8 @@ export default {
 			}
 		}),
 		alias: {
-			"@/*": "./path/to/lib/*",
+			"@/*": "./src/lib/*",
+			'@server': './src/server/*',
 		},
 	}
 };
