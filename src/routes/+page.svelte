@@ -32,10 +32,6 @@
         price = Math.floor(Math.random() * 10) + 1;
     };
 
-    const goToRedisVersion = async () => {
-        pop('Redirecting to Redis Version ...', 'Please wait');
-        await goto('/redis');
-    }
 </script>
 
 <div class="container mx-auto p-4 flex flex-col">
@@ -44,7 +40,6 @@
             <div class="text-2xl font-bold text-gray-800">Orderbook (Deno + In Memory Version)</div>
             <div class="text-center text-sm text-gray-600 flex gap-2 items-center">
                 (Reset once in a while) Last Updated: {new Date(timestamp).toLocaleString()}             
-                <Button class="bg-blue-200 text-black hover:bg-blue-300" size="sm" on:click={goToRedisVersion}>Redis Version</Button>
             </div>
         </div>
 
